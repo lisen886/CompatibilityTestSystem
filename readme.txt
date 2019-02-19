@@ -1,36 +1,7 @@
 使用说明：
-1、将isntallDemo中的browserConfig.json和installApplication_interface.py拷贝到compatibility目录下
-2、compatibility目录下新建chrome和firefox文件夹，存放浏览器安装包
-3、执行browserCompatibility.py(windows chrome 卸载的确定按钮可通过pyautogui enter)
-
-* https://github.com/mozilla/geckodriver/releases
-* https://blog.csdn.net/huilan_same/article/details/51896672?locationNum=11&fps=1
-
-目录结构如下
-
--compatibilitTest
-    -chrome
-       .chromewindows_59_installer.exe(名字需要在browserConfig.json和版本对应)
-       .chromemac59.dmg
-    -firefox
-       .firefoxwindows_59_installer.exe
-       .firefoxmac59.dmg
-    -webdriver
-        -mac
-            -chrome
-                .chromedriver2.21
-                .chromedriver2.22
-            -firefox
-                .geckodriver55+
-                .geckodriver57+
-        -windows
-            -chrome
-                .chromedriver2.21.exe
-                .chromedriver2.22.exe
-            -firefox
-                .geckodriver55+.exe
-                .geckodriver57+.exe
-    .browserConfig.json
-    .installApplication_interface.py
-    .browserCompatibility.py
-    .webdriverMap.json
+1、Lisen'MBP docker启动一个rtmp服务器，：docker run -d -p 1935:1935 --name nginx-rtmp tiangolo/nginx-rtmp
+2、运行兼容测试网站脚本CompatibilitySystem.py(记下机器A的IP)
+3、各个兼容执行机器上启动client.py脚本
+4、http://机器A的IP:8090 进入登录界面，账户密码为：lisen、123456
+5、兼容测试界面输入执行机IP，点击开始推流，可以实时查看执行机推流结果(网站需要允许Flash权限)
+6、点击兼容测试按钮，可以自行选择浏览器，多选版本进行兼容测试
