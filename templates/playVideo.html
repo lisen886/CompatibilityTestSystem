@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Compatibility System</title>
+  <link href="//vjs.zencdn.net/5.19/video-js.min.css" rel="stylesheet">
+  <script src="//vjs.zencdn.net/5.19/video.min.js"></script>
+  <script>
+    function startWin7LiveStream(){
+        var url = "http://"+getWin7Ip()+":1122/?platform=windows&browser=chrome&action=runWindowsLiveStream&pushChannelName=lisenwindows7&browserVersion=(68,69)";
+        var request = new XMLHttpRequest();
+        request.open("POST", url);
+        request.send()
+    }
+    function startWin10LiveStream(){
+        var url = "http://"+getWin10Ip()+":1122/?platform=windows&browser=chrome&action=runWindowsLiveStream&pushChannelName=lisenwindows10&browserVersion=(68,69)";
+        var request = new XMLHttpRequest();
+        request.open("POST", url);
+        request.send()
+    }
+    function startLisenMacProLiveStream(){
+        var url = "http://"+getLisenMacProIp()+":1122/?platform=mac&browser=chrome&action=runMacLiveStream&pushChannelName=lisenMacbookPro&browserVersion=(68,69)";
+        var request = new XMLHttpRequest();
+        request.open("POST", url);
+        request.send()
+    }
+    function startCompatibilityWin7(){
+        var browser = getCheckBox()[0];
+        var versions = getCheckBox()[1];
+        var url = "http://"+getWin7Ip()+":1122/?platform=windows&browser="+browser+"&action=runCompatibility&pushChannelName=lisenwindows7&browserVersion=("+versions+")";
+        var request = new XMLHttpRequest();
+        request.open("POST", url);
+        request.send();
+        hidden("divWin7");
+    }
+    function startCompatibilityWin10(){
+        var browser = getCheckBox()[0];
+        var versions = getCheckBox()[1];
+        var url = "http://"+getWin10Ip()+":1122/?platform=windows&browser="+browser+"&action=runCompatibility&pushChannelName=lisenwindows7&browserVersion=("+versions+")";
+        var request = new XMLHttpRequest();
+        request.open("POST", url);
+        request.send();
+        hidden("divWin10");
+    }
+    function startCompatibilityMacPro(){
+        var browser = getCheckBox()[0];
+        var versions = getCheckBox()[1];
+        var url = "http://"+getLisenMacProIp()+":1122/?platform=windows&browser="+browser+"&action=runCompatibility&pushChannelName=lisenwindows7&browserVersion=("+versions+")";
+        var request = new XMLHttpRequest();
+        request.open("POST", url);
+        request.send();
+        hidden("divMacPro");
+    }
+    function stopWin7LiveStream(){
+        var url = "http://"+getWin7Ip()+":1122/?platform=windows&browser=chrome&action=stopWindowsLiveStream&pushChannelName=lisenwindows7&browserVersion=(68,69)";
+        var request = new XMLHttpRequest();
+        request.open("POST", url);
+        request.send()
+    }
+    function stopWin10LiveStream(){
+        var url = "http://"+getWin10Ip()+":1122/?platform=windows&browser=chrome&action=stopWindowsLiveStream&pushChannelName=lisenwindows7&browserVersion=(68,69)";
+        var request = new XMLHttpRequest();
+        request.open("POST", url);
+        request.send()
+    }
+    function stopLisenMacProLiveStream(){
+        var url = "http://"+getLisenMacProIp()+":1122/?platform=windows&browser=chrome&action=stopMacLiveStream&pushChannelName=lisenwindows7&browserVersion=(68,69)";
+        var request = new XMLHttpRequest();
+        request.open("POST", url);
+        request.send()
+    }
+    function getLisenMacProIp(){
+        var macip = document.getElementById("ip_address_mac").value;
+        if(macip == ""){
+            alert("please send the IP address");
+        }
+        else{
+            return macip;
+        }
+    }
+    function getWin7Ip(){
+        var win7ip = document.getElementById("ip_address_win7").value;
+        if(win7ip == ""){
+            alert("please send the IP address");
+        }
+        else{
+            return win7ip;
+        }
+    }
+    function getWin10Ip(){
+        var win10ip = document.getElementById("ip_address_win10").value;
+        if(win10ip == ""){
+            alert("please send the IP address");
+        }
+        else{
+            return win10ip;
+        }
+    }
+    function sendRes(url){
+       var request = new XMLHttpRequest();
+       request.open("POST", url);
+       request.send()
+       if(request.readyState == 4 && request.status == 200){
+            var b = request.responseText;
+            if(b == "true"){
+                console.log("ojbk");
+            }else{
+                alert("fail");
+            }
+       }
+    }
+    function show(divEle){
+        document.getElementById(divEle).style.display = "";
+    }
+    function hidden(divEle){
+        document.getElementById(divEle).style.display = "none";
+    }
+    function getCheckBox(){
+        versions = document.getElementsByName("version");
+        browsers = document.getElementsByName("browser");
+        version_check_val = [];
+        for(k in versions){
+            if(versions[k].checked)
+                version_check_val.push(versions[k].value);
+        }
+        for(i in browsers){
+            if(browsers[i].checked)
+                var browser = browsers[i].value;
+        }
+        console.log(browser,version_check_val);
+        return [browser,version_check_val];
+    }
+  </script>
+</head>
+<body>
+<table>
+  <h2 align="center">Remote Screen</h2>
+    <tr>
+        <td><input type="text" placeholder="ip" id="ip_address_mac"></td>
+        <td><input type="text" placeholder="ip" id="ip_address_win7"></td>
+        <td><input type="text" placeholder="ip" id="ip_address_win10"></td>
+    </tr>
+    <tr>
+        <td width="600"><b>Lisen'MacBookPro </b><input type="button" value="开始推流"  onclick="startLisenMacProLiveStream()"/><input type="button" value="停止推流"  onclick="stopLisenMacProLiveStream()"/><input type="button" value="兼容测试"  onclick='show("divMacPro")'/></td>
+        <td width="600"><b>Lisen'Windows7 </b><input type="button" value="开始推流"  onclick="startWin7LiveStream()"/><input type="button" value="停止推流"  onclick="stopWin7LiveStream()"/><input type="button" value="兼容测试"  onclick='show("divWin7")'/></td>
+        <td width="600"><b>Lisen'Windows10 </b><input type="button" value="开始推流"  onclick="startWin10LiveStream()"/><input type="button" value="停止推流"  onclick="stopWin10LiveStream()"/><input type="button" value="兼容测试"  onclick='show("divWin10")'/></td>
+    </tr>
+    <tr>
+        <td>
+            <div id="divMacPro" style="display: none" class="content">
+            <br><strong>browser type</strong><br/>
+            <input name="browser" type="radio" value="chrome"/><span>chrome</span>
+            <input name="browser" type="radio" value="firefox"/><span>firefox</span>
+            <br><strong>version list</strong><br/>
+            <label/><input name="version" type="checkbox" value="68"/>68<label/>
+            <label/><input name="version" type="checkbox" value="69"/>69<label/>
+            <label/><input name="version" type="checkbox" value="70"/>70<label/>
+            <label/><input name="version" type="checkbox" value="71"/>71<label/>
+            <input type="button" value="开始" onclick="startCompatibilityMacPro()"/>
+        </div>
+        </td>
+        <td>
+            <div id="divWin7" style="display: none" class="content">
+            <br><strong>browser type</strong><br/>
+            <input name="browser" type="radio" value="chrome"/><span>chrome</span>
+            <input name="browser" type="radio" value="firefox"/><span>firefox</span>
+            <br><strong>version list</strong><br/>
+            <label/><input name="version" type="checkbox" value="58"/>58<label/>
+            <label/><input name="version" type="checkbox" value="59"/>59<label/>
+            <label/><input name="version" type="checkbox" value="60"/>60<label/>
+            <label/><input name="version" type="checkbox" value="61"/>61<label/>
+            <label/><input name="version" type="checkbox" value="62"/>62<label/>
+            <label/><input name="version" type="checkbox" value="63"/>63<label/>
+            <label/><input name="version" type="checkbox" value="64"/>64<label/>
+            <label/><input name="version" type="checkbox" value="65"/>65<label/>
+            <label/><input name="version" type="checkbox" value="66"/>66<label/>
+            <label/><input name="version" type="checkbox" value="67"/>67<label/>
+            <label/><input name="version" type="checkbox" value="68"/>68<label/>
+            <label/><input name="version" type="checkbox" value="69"/>69<label/>
+            <label/><input name="version" type="checkbox" value="70"/>70<label/>
+            <input type="button" value="开始" onclick="startCompatibilityWin7()"/>
+        </div>
+        </td>
+        <td>
+            <div id="divWin10" style="display: none" class="content">
+            <br><strong>browser type</strong><br/>
+            <input name="browser" type="radio" value="chrome"/><span>chrome</span>
+            <input name="browser" type="radio" value="firefox"/><span>firefox</span>
+            <br><strong>version list</strong><br/>
+            <label/><input name="version" type="checkbox" value="58"/>58<label/>
+            <label/><input name="version" type="checkbox" value="59"/>59<label/>
+            <label/><input name="version" type="checkbox" value="60"/>60<label/>
+            <label/><input name="version" type="checkbox" value="61"/>61<label/>
+            <label/><input name="version" type="checkbox" value="62"/>62<label/>
+            <label/><input name="version" type="checkbox" value="63"/>63<label/>
+            <label/><input name="version" type="checkbox" value="64"/>64<label/>
+            <label/><input name="version" type="checkbox" value="65"/>65<label/>
+            <label/><input name="version" type="checkbox" value="66"/>66<label/>
+            <label/><input name="version" type="checkbox" value="67"/>67<label/>
+            <label/><input name="version" type="checkbox" value="68"/>68<label/>
+            <label/><input name="version" type="checkbox" value="69"/>69<label/>
+            <label/><input name="version" type="checkbox" value="70"/>70<label/>
+            <input type="button" value="开始" onclick="startCompatibilityWin10()"/>
+        </div>
+        </td>
+    </tr>
+    <tr>
+       <td>
+        <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="460" height="480" data-setup="{}">
+        <source src="rtmp://10.80.0.221/live/lisenMacbookPro" type="rtmp/flv"/>
+        <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+        </video>
+       </td>
+       <td>
+        <video id="example_video_2" class="video-js vjs-default-skin" controls preload="none" width="460" height="480" data-setup="{}">
+        <source src="rtmp://10.80.0.221/live/lisenwindows7" type="rtmp/flv"/>
+        <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+        </video>
+       </td>
+       <td>
+        <video id="example_video_3" class="video-js vjs-default-skin" controls preload="none" width="460" height="480" data-setup="{}">
+        <source src="rtmp://10.80.0.221/live/lisenwindows10" type="rtmp/flv"/>
+        <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+        </video>
+       </td>
+    </tr>
+</table>
+</body>
+</html>
