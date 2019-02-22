@@ -24,8 +24,9 @@
         request.send()
     }
     function startCompatibilityWin7(){
-        var browser = getCheckBox()[0];
-        var versions = getCheckBox()[1];
+        var info = getCheckBox();
+        var browser = info[0];
+        var versions = info[1];
         var url = "http://"+getWin7Ip()+":1122/?platform=windows&browser="+browser+"&action=runCompatibility&pushChannelName=lisenwindows7&browserVersion=("+versions+")";
         var request = new XMLHttpRequest();
         request.open("POST", url);
@@ -33,8 +34,9 @@
         hidden("divWin7");
     }
     function startCompatibilityWin10(){
-        var browser = getCheckBox()[0];
-        var versions = getCheckBox()[1];
+        var info = getCheckBox();
+        var browser = info[0];
+        var versions = info[1];
         var url = "http://"+getWin10Ip()+":1122/?platform=windows&browser="+browser+"&action=runCompatibility&pushChannelName=lisenwindows7&browserVersion=("+versions+")";
         var request = new XMLHttpRequest();
         request.open("POST", url);
@@ -42,8 +44,9 @@
         hidden("divWin10");
     }
     function startCompatibilityMacPro(){
-        var browser = getCheckBox()[0];
-        var versions = getCheckBox()[1];
+        var info = getCheckBox();
+        var browser = info[0];
+        var versions = info[1];
         var url = "http://"+getLisenMacProIp()+":1122/?platform=windows&browser="+browser+"&action=runCompatibility&pushChannelName=lisenwindows7&browserVersion=("+versions+")";
         var request = new XMLHttpRequest();
         request.open("POST", url);
