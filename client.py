@@ -17,7 +17,7 @@ def doGet():
         if platform == "windows":
             if action == "runWindowsLiveStream":
                 sub = subprocess.Popen("ffmpeg -f gdigrab -framerate 30 -offset_x 0 -offset_y 0 -video_size 1920x1080 -i desktop -f flv rtmp://10.80.0.221/live/"+pushChannelName,shell=True,stdout=subprocess.PIPE,close_fds=True)
-                sub.wait()
+                # sub.wait()
             elif action == "runCompatibility":
                 jsonStr =""
                 if browser == "chrome":
@@ -27,11 +27,11 @@ def doGet():
                 runCom(jsonStr)
             elif action == "stopWindowsLiveStream":
                 sub = subprocess.Popen("taskkill /f /im ffmpeg.exe",shell=True, stdout=subprocess.PIPE,close_fds=True)
-                sub.wait()
+                # sub.wait()
         elif platform == "mac":
             if action == "runMacLiveStream":
                 sub = subprocess.Popen("ffmpeg -f avfoundation -pixel_format uyvy422 -i '1' -f flv rtmp://10.80.0.221/live/"+pushChannelName,shell=True,stdout=subprocess.PIPE,close_fds=True)
-                sub.wait()
+                # sub.wait()
             elif action == "runCompatibility":
                 jsonStr = ""
                 if browser == "chrome":
@@ -41,7 +41,7 @@ def doGet():
                 runCom(jsonStr)
             elif action == "stopMacLiveStream":
                 sub = subprocess.Popen("ps -ef | grep ffmpeg | grep -v grep | awk '{print $2}' | xargs kill -9", shell=True, stdout=subprocess.PIPE,close_fds=True)
-                sub.wait()
+                # sub.wait()
         return "pass"
     except Exception as e:
         return str(e)
